@@ -7,15 +7,7 @@ using System.Threading.Tasks;
 /**
  *  The PixImage class represents an image, which is a rectangular grid of
  *  color pixels.  Each pixel has red, green, and blue intensities in the range
- *  0...255.  Descriptions of the methods you must implement appear below.
- *  They include a constructor of the form
- *
- *      public PixImage(int width, int height);
- *
- *  that creates a black (zero intensity) image of the specified width and
- *  height.  Pixels are numbered in the range (0...width - 1, 0...height - 1).
- *
- *  All methods in this class must be implemented to complete Part I.
+ *  0...255.  
  */
 
 
@@ -32,10 +24,8 @@ namespace ImageProcessing
         }
 
         /// <summary>
-        ///  Define any variables associated with a PixImage object here.  These
-        ///  variables MUST be private.
+        ///  PixImage's width, height and pixel
         /// </summary>
-        //private static readonly byte[] imageBuffer = new byte[102400];
         private int width;
         private int height;
         private Pixel[,] myImage;
@@ -68,7 +58,6 @@ namespace ImageProcessing
         {
             get
             {
-                // Replace the following line with your solution.
                 return this.width;
             }
         }
@@ -80,7 +69,6 @@ namespace ImageProcessing
         {
             get
             {
-                // Replace the following line with your solution.
                 return this.height;
             }
         }
@@ -93,7 +81,6 @@ namespace ImageProcessing
         /// <returns> the red intensity of the pixel at coordinate (x, y). </returns>
         public virtual short getRed(int x, int y)
         {
-            // Replace the following line with your solution.
             return myImage[x, y].red;
         }
 
@@ -105,7 +92,6 @@ namespace ImageProcessing
         /// <returns> the green intensity of the pixel at coordinate (x, y). </returns>
         public virtual short getGreen(int x, int y)
         {
-            // Replace the following line with your solution.
             return myImage[x, y].green;
         }
 
@@ -117,9 +103,9 @@ namespace ImageProcessing
         /// <returns> the blue intensity of the pixel at coordinate (x, y). </returns>
         public virtual short getBlue(int x, int y)
         {
-            // Replace the following line with your solution.
             return myImage[x,y].blue;
         }
+        
         /// <summary>
         /// setPixel() sets the pixel at coordinate (x, y) to specified red, green,
         /// and blue intensities.
@@ -139,6 +125,11 @@ namespace ImageProcessing
                 myImage[x, y] = new Pixel();
             }
 
+            if (red < 0 || red > 255 || green < 0 || green > 255 || blue < 0 || blue > 255)
+            {
+                return;
+            }
+            
             this.myImage[x, y].red = red;
             this.myImage[x, y].green = green;
             this.myImage[x, y].blue = blue;
@@ -147,10 +138,6 @@ namespace ImageProcessing
 
         /// <summary>
         /// toString() returns a String representation of this PixImage.
-        /// 
-        /// This method isn't required, but it should be very useful to you when
-        /// you're debugging your code.  It's up to you how you represent a PixImage
-        /// as a String.
         /// </summary>
         /// <returns> a String representation of this PixImage. </returns>
         public override string ToString()
@@ -189,9 +176,6 @@ namespace ImageProcessing
         /// box blurring to perform.  If numIterations is zero or negative, "this"
         /// PixImage is returned (not a copy).  If numIterations is positive, the
         /// return value is a newly constructed PixImage.
-        /// 
-        /// IMPORTANT:  DO NOT CHANGE "this" PixImage!!!  All blurring/changes should
-        /// appear in the new, output PixImage only.
         /// </summary>
         /// <param name="numIterations"> the number of iterations of box blurring. </param>
         /// <returns> a blurred version of "this" PixImage. </returns>
@@ -212,7 +196,7 @@ namespace ImageProcessing
                     {
                         // Get Blur Value
                         Pixel bPixel = getBlurValue(prevBlur, x,y);
-                        
+                        // Set the new pixel to blurImage
                         blurImage.setPixel(x, y, bPixel.red, bPixel.green, bPixel.blue);
                     }
                 }
@@ -256,8 +240,6 @@ namespace ImageProcessing
         /// 0...24,969,600 to a grayscale intensity in the range 0...255.  The map
         /// is logarithmic, but shifted so that values of 5,080 and below map to zero.
         /// 
-        /// DO NOT CHANGE THIS METHOD.  If you do, you will not be able to get the
-        /// correct images and pass the autograder.
         /// </summary>
         /// <param name="mag"> the energy (squared vector magnitude) of the pixel whose
         /// intensity we want to compute. </param>
@@ -295,7 +277,6 @@ namespace ImageProcessing
         /// Whiter pixels represent stronger edges. </returns>
         public virtual PixImage sobelEdges()
         {
-            //return this;
             PixImage img = new PixImage(width, height);
             int[,] xCalMat =
             {
@@ -362,9 +343,7 @@ namespace ImageProcessing
 
 
         /// <summary>
-        /// TEST CODE:  YOU DO NOT NEED TO FILL IN ANY METHODS BELOW THIS POINT.
-        /// You are welcome to add tests, though.  Methods below this point will not
-        /// be tested.  This is not the autograder, which will be provided separately.
+        /// TEST CODE:  
         /// </summary>
 
 
@@ -446,9 +425,6 @@ namespace ImageProcessing
         /// </summary>
         public static void Main(string[] args)
         {
-            // Be forwarned that when you write arrays directly in C# as below,
-            // each "row" of text is a column of your image--the numbers get
-            // transposed.
             PixImage image1 = array2PixImage(new int[][]
             {
         new int[] {0, 10, 240},
